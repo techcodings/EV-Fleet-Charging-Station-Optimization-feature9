@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "./energyverse.css";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "https://joyful-kangaroo-2731b3.netlify.app";
+const API_BASE = import.meta.env.VITE_API_BASE || "https://joyful-kangaroo-2731b3.netlify.app/api";
+
 
 function Map({ path, stops }) {
   const ref = useRef(null);
