@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "./energyverse.css";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "https://joyful-kangaroo-2731b3.netlify.app/api";
+const API_BASE = import.meta.env.VITE_API_BASE || "https://earnest-muffin-40f8ee.netlify.app/api";
 
 
 function Map({ path, stops }) {
