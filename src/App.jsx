@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "./energyverse.css";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "https://earnest-muffin-40f8ee.netlify.app/api";
-
+const API_BASE =
+  import.meta.env.VITE_API_BASE ||
+  "https://earnest-muffin-40f8ee.netlify.app/api";
 
 function Map({ path, stops }) {
   const ref = useRef(null);
@@ -98,15 +99,46 @@ export default function App() {
     setAlerts(aj.alerts || []);
   };
 
-  // ✅ Auto run optimization on page load
   useEffect(() => {
     plan();
   }, []);
 
   return (
-    <div className="ev-wrapper">
-      <h1 className="ev-title">⚡ EV Route & Charging Optimizer</h1>
-      <p className="ev-sub">Plan smarter EV trips with AI-powered routing & charging</p>
+    <div className="ev-wrapper" style={{ position: "relative" }}>
+      {/* ✅ Fixed Top-Right Back Button */}
+      <a
+        href="https://energy-verse-portal.netlify.app/?feature=7"
+        className="btn-back-top"
+        style={{
+          position: "absolute",
+          top: "16px",
+          right: "20px",
+          background: "linear-gradient(90deg, #caff37, #84ff4b)",
+          color: "#000",
+          padding: "7px 16px",
+          borderRadius: "8px",
+          fontWeight: "600",
+          textDecoration: "none",
+          boxShadow: "0 0 12px rgba(186,255,55,0.7)",
+          transition: "all 0.3s ease",
+          zIndex: 1000,
+        }}
+        onMouseEnter={(e) =>
+          (e.currentTarget.style.boxShadow = "0 0 20px rgba(186,255,55,1)")
+        }
+        onMouseLeave={(e) =>
+          (e.currentTarget.style.boxShadow = "0 0 12px rgba(186,255,55,0.7)")
+        }
+      >
+        ← Back to Home
+      </a>
+
+      <h1 className="ev-title" style={{ marginTop: "60px" }}>
+        ⚡ EV Route & Charging Optimizer
+      </h1>
+      <p className="ev-sub">
+        Plan smarter EV trips with AI-powered routing & charging
+      </p>
 
       <div className="ev-layout">
         {/* ✅ LEFT FORM */}
@@ -115,10 +147,14 @@ export default function App() {
 
           <div className="ev-form-grid">
             {[
-              ["Origin Lat", "oLat"], ["Origin Lon", "oLon"],
-              ["Dest Lat", "dLat"], ["Dest Lon", "dLon"],
-              ["Battery kWh", "battery_kwh"], ["Start SOC", "soc_start"],
-              ["Min SOC", "soc_min"], ["$/kWh", "price"],
+              ["Origin Lat", "oLat"],
+              ["Origin Lon", "oLon"],
+              ["Dest Lat", "dLat"],
+              ["Dest Lon", "dLon"],
+              ["Battery kWh", "battery_kwh"],
+              ["Start SOC", "soc_start"],
+              ["Min SOC", "soc_min"],
+              ["$/kWh", "price"],
             ].map(([label, key]) => (
               <div className="ev-field" key={key}>
                 <label>{label}</label>
@@ -151,7 +187,13 @@ export default function App() {
 
               <table className="ev-table">
                 <thead>
-                  <tr><th>Stop</th><th>Arrive</th><th>kWh</th><th>Mins</th><th>Cost</th></tr>
+                  <tr>
+                    <th>Stop</th>
+                    <th>Arrive</th>
+                    <th>kWh</th>
+                    <th>Mins</th>
+                    <th>Cost</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {result.stops.map((s, i) => (
@@ -167,9 +209,9 @@ export default function App() {
               </table>
 
               <div className="ev-summary-stats">
-                ⚡ {result.total_energy_kwh.toFixed(2)} kWh &nbsp;|&nbsp;
-                💰 ${result.total_cost_usd.toFixed(2)} &nbsp;|&nbsp;
-                🔋 {(result.final_soc * 100).toFixed(0)}%
+                ⚡ {result.total_energy_kwh.toFixed(2)} kWh &nbsp;|&nbsp; 💰 $
+                {result.total_cost_usd.toFixed(2)} &nbsp;|&nbsp; 🔋{" "}
+                {(result.final_soc * 100).toFixed(0)}%
               </div>
             </div>
           )}
@@ -177,8 +219,12 @@ export default function App() {
           {sim && (
             <div className="ev-card slide-up">
               <h3 className="ev-sec-title">🚦 Traffic Simulation</h3>
-              <p>Baseline: {sim.baseline.route.duration_min.toFixed(1)} min</p>
-              <p>Traffic: {sim.heavyTraffic.route.duration_min.toFixed(1)} min</p>
+              <p>
+                Baseline: {sim.baseline.route.duration_min.toFixed(1)} min
+              </p>
+              <p>
+                Traffic: {sim.heavyTraffic.route.duration_min.toFixed(1)} min
+              </p>
             </div>
           )}
         </div>
